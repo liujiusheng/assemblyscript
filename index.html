@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="./helper.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+	<div style="position:fixed;top:10px;left:10px;z-index:1;">
+		加载地图示例
+	</div>
+    <div id='map'></div>
+    <script>
+        function fib (n) {
+            if (n < 2) {
+            return 1
+            }
+            return fib(n - 2) + fib(n - 1);
+        }
+
+        // let date1 = new Date();
+        // console.log(fib(50));
+        // let date2 = new Date();
+        // console.log('斐波那契测试');
+        // console.log('原生js耗时：',(date2.getTime()-date1.getTime()));
+
+
+        fetch('./module.optimized.wasm')
+        .then(response => response.arrayBuffer())
+        .then(function(result){
+            console.log(result);
+            let myModule = new WebAssembly.Instance(new WebAssembly.Module(result, {}));
+            let date3 = new Date();
+            console.log(myModule.exports.fib(50));
+            let date4 = new Date();
+            console.log('WebAssembly耗时：',(date4.getTime()-date3.getTime()));
+        });
+
+        
+    </script>
+
+</body>
+
+</html>
